@@ -1,0 +1,12 @@
+{
+  "version": "0.1.0",
+  "url": "https://github.com/archhaze24/touch-for-windows/releases/download/v0.1.0/touch.exe",
+  "hash": "41543ee6fc475a73477e6a6622bd3efb56204170d5d01c9a21397ec4aef014ae",
+  "bin": "touch.exe",
+  "description": "Analogue of Linux touch command for Windows.",
+  "homepage": "https://github.com/archhaze24/touch-for-windows",
+  "license": {
+    "identifier": "GPL-3.0-or-later",
+    "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
+  }
+}
