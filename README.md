@@ -4,7 +4,9 @@ Analogue of Linux `touch` command for Windows, written in Rust.
 ## Installation:
 
 ### [Scoop](https://scoop.sh/):
-`scoop install https://raw.githubusercontent.com/archhaze24/touch-for-windows/master/touch.json`
+```
+scoop install https://raw.githubusercontent.com/archhaze24/touch-for-windows/master/touch.json
+```
 
 ### Manually:
 Download the latest executable from releases page (or build it manually), place it where you want, and add folder containing it to Path.
