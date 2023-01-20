@@ -1,7 +1,7 @@
 {
-  "version": "0.1.1",
-  "url": "https://github.com/archhaze24/touch-for-windows/releases/download/v0.1.1/touch.exe",
-  "hash": "e49c03452135aa8af92db034b2e9ea9fc3850a620c6c60e672a5930ddb3dbce7",
+  "version": "0.1.2",
+  "url": "https://github.com/archhaze24/touch-for-windows/releases/download/v0.1.2/touch.exe",
+  "hash": "db3d70d826f5d12029b668d7e8fc4bbeeaabbdf0099776d00faa737f38985125",
   "bin": "touch.exe",
   "description": "Analogue of Linux touch command for Windows.",
   "homepage": "https://github.com/archhaze24/touch-for-windows",
