@@ -37,33 +37,22 @@ pub fn run(args: Args) {
     }
 
     if args.date.is_some() {
-        let date_string = args.date.as_ref().unwrap();
-        let date_string = date_string.to_str().unwrap_or_else(|| {
+        let date_str = args.date.as_ref().unwrap().to_str().unwrap_or_else(|| {
             eprintln!("touch: error parsing date");
             process::exit(1);
         });
 
-        let time = parse_with_timezone(date_string, &Local).unwrap_or_else(|_| {
+        let datetime = parse_with_timezone(date_str, &Local).unwrap_or_else(|_| {
             eprintln!("touch: error parsing date");
             process::exit(1);
         });
-        let time = FileTime::from_system_time(SystemTime::from(time));
+        let time = FileTime::from_system_time(SystemTime::from(datetime));
 
-        for path in &args.file_paths {
-            let path = Path::new(path);
-            if path.exists() {
-                set_file_time(&args, path, time, time);
-            }
-        }
+        set_files_time(&args, time);
     } else {
         let time_now = FileTime::from_system_time(SystemTime::now());
 
-        for path in &args.file_paths {
-            let path = Path::new(path);
-            if path.exists() {
-                set_file_time(&args, path, time_now, time_now);
-            }
-        }
+        set_files_time(&args, time_now);
     }
 }
 
@@ -74,19 +63,36 @@ fn create_file(path: &Path) -> File {
     })
 }
 
-fn set_file_time(args: &Args, path: &Path, atime: FileTime, mtime: FileTime) {
+fn set_files_time(args: &Args, time: FileTime) {
     if !args.access && !args.modification {
-        set_file_times(path, atime, mtime)
-            .unwrap_or_else(|err| eprintln!("touch: unable to set file times: {err}"));
+        for path in &args.file_paths {
+            let path = Path::new(path);
+            if path.exists() {
+                set_file_times(path, time, time)
+                    .unwrap_or_else(|err| eprintln!("touch: unable to set file times: {err}"));
+            }
+        }
     }
 
     if args.access {
-        set_file_atime(path, atime)
-            .unwrap_or_else(|err| eprintln!("touch: unable to set file access time: {err}"));
+        for path in &args.file_paths {
+            let path = Path::new(path);
+            if path.exists() {
+                set_file_atime(path, time).unwrap_or_else(|err| {
+                    eprintln!("touch: unable to set file access time: {err}")
+                });
+            }
+        }
     }
 
     if args.modification {
-        set_file_mtime(path, mtime)
-            .unwrap_or_else(|err| eprintln!("touch: unable to set file modification time: {err}"))
+        for path in &args.file_paths {
+            let path = Path::new(path);
+            if path.exists() {
+                set_file_mtime(path, time).unwrap_or_else(|err| {
+                    eprintln!("touch: unable to set file modification time: {err}")
+                });
+            }
+        }
     }
 }
