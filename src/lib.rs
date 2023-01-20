@@ -1,8 +1,8 @@
-use std::{fs::File, path::Path, process, time::SystemTime, ffi::OsString};
 use chrono::offset::Local;
 use clap::{arg, ArgAction, Parser};
 use dateparser::parse_with_timezone;
-use filetime::{FileTime, set_file_atime, set_file_mtime, set_file_times};
+use filetime::{set_file_atime, set_file_mtime, set_file_times, FileTime};
+use std::{ffi::OsString, fs::File, path::Path, process, time::SystemTime};
 
 const DESCRIPTION: &str = "touch - change file timestamps\n\nUpdate the access and modification times of each FILE to the current time.\nA FILE argument that does not exist is created empty, unless -c is supplied.\nMandatory arguments to long options are mandatory for short options too.";
 
@@ -67,14 +67,14 @@ pub fn run(args: Args) {
     }
 }
 
-pub fn create_file(path: &Path) -> File {
+fn create_file(path: &Path) -> File {
     File::create(path).unwrap_or_else(|err| {
         eprintln!("touch: can't create file: {err}");
         process::exit(1)
     })
 }
 
-pub fn set_file_time(args: &Args, path: &Path, atime: FileTime, mtime: FileTime) {
+fn set_file_time(args: &Args, path: &Path, atime: FileTime, mtime: FileTime) {
     if !args.access && !args.modification {
         set_file_times(path, atime, mtime)
             .unwrap_or_else(|err| eprintln!("touch: unable to set file times: {err}"));
