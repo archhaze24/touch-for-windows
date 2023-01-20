@@ -1,6 +1,5 @@
-use std::process;
-
 use clap::Parser;
+use std::process;
 
 fn main() {
     let args = touch_for_windows::Args::parse();
