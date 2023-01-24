@@ -41,4 +41,3 @@ Building from source is simple: just clone this project, and then run `cargo bui
 
 ## Contributing:
 Contributions are welcome - both issues and pull requests!
-The only rule for pull requests is that code should be formatted with `rustfmt`.
