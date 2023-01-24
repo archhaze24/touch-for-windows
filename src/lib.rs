@@ -19,7 +19,7 @@ pub struct Args {
     do_not_create: bool,
 
     #[arg(short, long, help = "Parse DATE and use it instead of current time")]
-    date: Option<OsString>,
+    date: Option<String>,
 
     #[arg(short, action = ArgAction::SetTrue, help = "Change only the modification time")]
     modification: bool,
@@ -51,7 +51,7 @@ pub fn run(args: Args) {
     }
 
     if args.date.is_some() {
-        let date_str = args.date.as_ref().unwrap().to_str().unwrap_or_else(|| {
+        let date_str = args.date.as_ref().unwrap_or_else(|| {
             eprintln!("touch: error parsing date");
             process::exit(1);
         });
